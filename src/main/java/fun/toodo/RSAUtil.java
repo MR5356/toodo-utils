@@ -24,6 +24,10 @@ public class RSAUtil {
     public RSAUtil() {
     }
 
+    /**
+     * 生成密钥对
+     * @return 公私钥map
+     */
     public static Map<String, Key> init() {
         Map<String, Key> map = new HashMap<>();
 
@@ -42,6 +46,11 @@ public class RSAUtil {
         return map;
     }
 
+    /**
+     * 获取公钥
+     * @param map 生成的公私钥map
+     * @return 公钥字符串
+     */
     public static String getPublicKey(Map<String, Key> map) {
         String str = "";
         Key key = map.get("RSAPublicKey");
@@ -49,6 +58,11 @@ public class RSAUtil {
         return str;
     }
 
+    /**
+     * 获取私钥
+     * @param map 生成的公私钥map
+     * @return 私钥字符串
+     */
     public static String getPrivateKey(Map<String, Key> map) {
         String str = "";
         Key key = map.get("RSAPrivateKey");
@@ -64,6 +78,12 @@ public class RSAUtil {
         return new String(Base64.getEncoder().encode(key));
     }
 
+    /**
+     * 使用公钥加密
+     * @param encryptingStr 需要加密的字符串
+     * @param publicKeyStr 公钥字符串
+     * @return 加密后的字符串
+     */
     public static String encryptByPublicKey(String encryptingStr, String publicKeyStr) {
         try {
             byte[] publicKeyBytes = decryptBase64(publicKeyStr);
@@ -98,6 +118,12 @@ public class RSAUtil {
         }
     }
 
+    /**
+     * 使用私钥解密
+     * @param encryptedStr 需要解密的字符串
+     * @param privateKeyStr 私钥字符串
+     * @return 解密后的字符串
+     */
     public static String decryptByPrivateKey(String encryptedStr, String privateKeyStr) {
         try {
             byte[] privateKeyBytes = decryptBase64(privateKeyStr);
@@ -131,6 +157,12 @@ public class RSAUtil {
         }
     }
 
+    /**
+     * 使用私钥加密
+     * @param encryptingStr 需要加密的字符串
+     * @param privateKeyStr 私钥字符串
+     * @return 加密后的字符串
+     */
     public static String encryptByPrivateKey(String encryptingStr, String privateKeyStr) {
         try {
             byte[] privateKeyBytes = decryptBase64(privateKeyStr);
@@ -165,6 +197,12 @@ public class RSAUtil {
         }
     }
 
+    /**
+     * 使用公钥解密
+     * @param encryptedStr 需要解密的字符串
+     * @param publicKeyStr 公钥字符串
+     * @return 解密后的字符串
+     */
     public static String decryptByPublicKey(String encryptedStr, String publicKeyStr) {
         try {
             byte[] publicKeyBytes = decryptBase64(publicKeyStr);
@@ -198,6 +236,12 @@ public class RSAUtil {
         }
     }
 
+    /**
+     * 使用私钥进行签名
+     * @param encryptedStr 需要签名的字符串
+     * @param privateKey 私钥字符串
+     * @return 签名字符串
+     */
     public static String sign(String encryptedStr, String privateKey) {
         String str = "";
 
@@ -218,6 +262,13 @@ public class RSAUtil {
         return str;
     }
 
+    /**
+     * 使用公钥检测签名是否正确
+     * @param encryptedStr 需要验证签名的字符串
+     * @param publicKey 公钥字符串
+     * @param sign 签名字符串
+     * @return Boolean 是否正确
+     */
     public static boolean verify(String encryptedStr, String publicKey, String sign) {
         boolean flag = false;
 
