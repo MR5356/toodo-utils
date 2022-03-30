@@ -1,6 +1,6 @@
-package fun.toodo;
+package fun.toodo.utils;
 
-import static fun.toodo.Common.*;
+import static fun.toodo.utils.ToodoUtils.*;
 
 /**
  * 常用转换工具 -- 字节转换
@@ -22,7 +22,7 @@ public class ConversionUtil {
         String[] units = {"B", "KB", "MB", "GB", "TB", "PB"};
         for (String unit: units) {
             if (value / size < 1 || unit.equals("PB")) {
-                return decimalFormat.format(value) + unit;
+                return commonDecimalFormat.format(value) + unit;
             }
             value = value / size;
         }

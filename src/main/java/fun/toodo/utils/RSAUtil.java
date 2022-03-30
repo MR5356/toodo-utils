@@ -1,4 +1,4 @@
-package fun.toodo;
+package fun.toodo.utils;
 
 import javax.crypto.Cipher;
 import java.io.ByteArrayOutputStream;
