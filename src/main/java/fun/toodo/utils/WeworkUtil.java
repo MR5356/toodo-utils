@@ -84,8 +84,7 @@ public class WeworkUtil {
         data.put("msgtype", MSG_TYPE_MARKDOWN);
         data.put("agentid", this.agentID);
         data.put("markdown", new JSONObject().set("content", message));
-        JSONObject res = new JSONObject(HttpUtil.post("https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token=" + this.getAccessToken(), JSONUtil.toJsonStr(data)));
-        log.info("123");
+        JSONObject res = new JSONObject(ToodoHttpUtil.httpExecute(ToodoHttpUtil.httpPost("https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token=" + this.getAccessToken(), JSONUtil.toJsonStr(data))));
         if (res.getInt("errcode") == 0) {
             log.info("企业微信发送成功");
         } else {
@@ -106,7 +105,7 @@ public class WeworkUtil {
         data.put("msgtype", msgType);
         data.put("agentid", this.agentID);
         data.put(msgType, new JSONObject().set("content", message));
-        JSONObject res = new JSONObject(HttpUtil.post("https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token=" + this.getAccessToken(), JSONUtil.toJsonStr(data)));
+        JSONObject res = new JSONObject(ToodoHttpUtil.httpExecute(ToodoHttpUtil.httpPost("https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token=" + this.getAccessToken(), JSONUtil.toJsonStr(data))));
         if (res.getInt("errcode") == 0) {
             log.info("企业微信发送成功");
         } else {
@@ -128,7 +127,7 @@ public class WeworkUtil {
         Map<String, Object> data = new HashMap<>();
         data.put("msgtype", msgType);
         data.put(msgType, new JSONObject().set("content", message));
-        JSONObject res = new JSONObject(HttpUtil.post(webhook, JSONUtil.toJsonStr(data)));
+        JSONObject res = new JSONObject(ToodoHttpUtil.httpExecute(ToodoHttpUtil.httpPost(webhook, JSONUtil.toJsonStr(data))));
         if (res.getInt("errcode") == 0) {
             log.info("企业微信发送成功");
         } else {
@@ -151,7 +150,7 @@ public class WeworkUtil {
         Map<String, Object> data = new HashMap<>();
         data.put("msgtype", msgType);
         data.put(msgType, new JSONObject().set("content", message).set("mentioned_list", mentionedList));
-        JSONObject res = new JSONObject(HttpUtil.post(webhook, JSONUtil.toJsonStr(data)));
+        JSONObject res = new JSONObject(ToodoHttpUtil.httpExecute(ToodoHttpUtil.httpPost(webhook, JSONUtil.toJsonStr(data))));
         if (res.getInt("errcode") == 0) {
             log.info("企业微信发送成功");
         } else {
