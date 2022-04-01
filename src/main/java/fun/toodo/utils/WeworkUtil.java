@@ -105,9 +105,53 @@ public class WeworkUtil {
         data.put("touser", String.join("|", users));
         data.put("msgtype", msgType);
         data.put("agentid", this.agentID);
-        data.put("markdown", new JSONObject().set("content", message));
+        data.put(msgType, new JSONObject().set("content", message));
         JSONObject res = new JSONObject(HttpUtil.post("https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token=" + this.getAccessToken(), JSONUtil.toJsonStr(data)));
-        log.info("123");
+        if (res.getInt("errcode") == 0) {
+            log.info("企业微信发送成功");
+        } else {
+            log.error("企业微信发送失败：{}", res.getStr("errmsg"));
+        }
+    }
+
+    /**
+     * 发送webhook消息，不支持群内@人
+     * @param webhook webhook地址
+     * @param message 消息，支持text，markdown
+     * @param msgType 支持text，markdown
+     */
+    @SneakyThrows
+    public static void sendMessage(String webhook, String message, String msgType) {
+        if (!List.of("text", "markdown").contains(msgType)) {
+            throw new ToodoException("不支持的消息类型");
+        }
+        Map<String, Object> data = new HashMap<>();
+        data.put("msgtype", msgType);
+        data.put(msgType, new JSONObject().set("content", message));
+        JSONObject res = new JSONObject(HttpUtil.post(webhook, JSONUtil.toJsonStr(data)));
+        if (res.getInt("errcode") == 0) {
+            log.info("企业微信发送成功");
+        } else {
+            log.error("企业微信发送失败：{}", res.getStr("errmsg"));
+        }
+    }
+
+    /**
+     * 发送webhook消息，支持群内@人
+     * @param webhook webhook地址
+     * @param message 消息，仅支持text
+     * @param msgType 仅支持text
+     * @param mentionedList 提醒人列表
+     */
+    @SneakyThrows
+    public static void sendMessage(String webhook, String message, String msgType, List<String> mentionedList) {
+        if (!msgType.equals("text")) {
+            throw new ToodoException("不支持的消息类型");
+        }
+        Map<String, Object> data = new HashMap<>();
+        data.put("msgtype", msgType);
+        data.put(msgType, new JSONObject().set("content", message).set("mentioned_list", mentionedList));
+        JSONObject res = new JSONObject(HttpUtil.post(webhook, JSONUtil.toJsonStr(data)));
         if (res.getInt("errcode") == 0) {
             log.info("企业微信发送成功");
         } else {
