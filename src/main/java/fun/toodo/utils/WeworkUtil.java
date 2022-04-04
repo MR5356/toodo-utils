@@ -1,7 +1,6 @@
 package fun.toodo.utils;
 
 import cn.hutool.core.lang.Validator;
-import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import fun.toodo.utils.exception.ToodoException;
@@ -75,7 +74,6 @@ public class WeworkUtil {
     /**
      * 发送markdown消息
      * @param message 需要发送的消息
-     * @param token token
      * @param users 接收者列表
      */
     public void sendMessage(String message, List<String> users) {
@@ -95,7 +93,6 @@ public class WeworkUtil {
     /**
      * 发送自定义类型消息
      * @param message 需要发送的消息
-     * @param token token
      * @param users 接收者列表
      * @param msgType text或者markdown
      */
