@@ -52,7 +52,6 @@ public class WeworkUtil {
 
     /**
      * 刷新token
-     * @return token
      */
     @SneakyThrows
     public void refreshAccessToken() {
