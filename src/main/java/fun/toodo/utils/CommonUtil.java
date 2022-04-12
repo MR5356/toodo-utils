@@ -2,6 +2,7 @@ package fun.toodo.utils;
 
 import java.util.regex.Pattern;
 
+import static cn.hutool.core.text.CharSequenceUtil.isEmpty;
 import static fun.toodo.utils.ToodoUtils.*;
 
 public class CommonUtil {
@@ -105,5 +106,48 @@ public class CommonUtil {
      */
     public static Boolean isMatch(Pattern pattern, CharSequence value) {
         return pattern.matcher(value).matches();
+    }
+
+    /**
+     * 时间戳转换为相对时间
+     */
+    public static String getRelativeTime(Long timestamp) {
+        if (timestamp == null) {
+            return "";
+        }
+        Long now = System.currentTimeMillis();
+        long diff = now - timestamp;
+        if (diff < 0) {
+            return "";
+        }
+        if (diff < 1000) {
+            return "刚刚";
+        }
+        if (diff < 60 * 1000) {
+            return diff / 1000 + "秒前";
+        }
+        if (diff < 60 * 60 * 1000) {
+            return diff / (60 * 1000) + "分钟前";
+        }
+        if (diff < 24 * 60 * 60 * 1000) {
+            return diff / (60 * 60 * 1000) + "小时前";
+        }
+        if (diff < 30L * 24 * 60 * 60 * 1000) {
+            return diff / (24 * 60 * 60 * 1000) + "天前";
+        }
+        if (diff < 12L * 30 * 24 * 60 * 60 * 1000) {
+            return diff / (30L * 24 * 60 * 60 * 1000) + "月前";
+        }
+        return diff / (12L * 30 * 24 * 60 * 60 * 1000) + "年前";
+    }
+
+    /**
+     * 时间戳转换为相对时间
+     */
+    public static String getRelativeTime(String timestamp) {
+        if (isEmpty(timestamp)) {
+            return "";
+        }
+        return getRelativeTime(Long.valueOf(timestamp));
     }
 }

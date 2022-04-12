@@ -10,22 +10,37 @@ import lombok.extern.slf4j.Slf4j;
 public class ToodoHttpUtil {
     public ToodoHttpUtil() {}
 
+    /**
+     * 构建get请求
+     * @param url 请求地址
+     * @return 返回请求对象
+     */
     public static HttpRequest httpGet(String url) {
         return HttpRequest.get(url);
     }
 
+    /**
+     * 构建post请求
+     * @param url 请求地址
+     * @return 返回请求对象
+     */
     public static HttpRequest httpPost(String url, Object data) {
         return HttpRequest.post(url)
                 .body(data.toString());
     }
 
+    /**
+     * 发送http请求
+     * @param httpRequest 请求对象
+     * @return 返回请求结果
+     */
     @SneakyThrows
     public static String httpExecute(HttpRequest httpRequest) {
         HttpResponse response;
         for (int i = 0; i < 5; i++) {
             try {
                 response = httpRequest.execute();
-                if (response.getStatus() != 200 && response.getStatus() != 204) {
+                if (!response.isOk()) {
                     throw new ToodoException("错误的返回码：" + response.getStatus());
                 } else {
                     return response.body();
